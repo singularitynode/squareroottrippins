@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Root Indicator App</title>
+    
+    <style>
+        /* Import Futuristic/Tech Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        /* CSS Variables: Quantum-Neumorphic Palette */
+        :root {
+            --color-bg-deep: #14141c; /* Background Deep Core */
+            --color-light-source: #2c2c3c; /* Light source for Neumorphism */
+            --color-dark-source: #08080c;  /* Dark shadow for Neumorphism */
+            --color-accent-quantum: #00FFFF; /* Cyan/Quantum Glow */
+            --color-text-primary: #E0E0E0;
+            --color-error: #FF6666;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --container-width: 450px;
+        }
+
+        /* Global Body & Centering */
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg-deep);
+            color: var(--color-text-primary);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;    /* Center vertically */
+            padding: 20px;
+            /* Corporate Scene Background */
+            background-image: url('https://placeholder.com/1920x1080/0d0d10/444455?text=HIGH-TECH+CORPORATE+DATA+CENTER');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* Quantum Multi-Layered Glassmorphic Container */
+        .quantum-container {
+            width: 100%;
+            max-width: var(--container-width);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.3); /* Quantum Border */
+            
+            /* Multi-Layered Glassmorphism */
+            background: rgba(20, 20, 30, 0.4); /* Inner Layer Transparency */
+            backdrop-filter: blur(15px) saturate(150%); /* Core Blur */
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            
+            /* Subtle Hover/Focus Glow */
+            box-shadow: 
+                0 0 50px rgba(0, 255, 255, 0.2), /* Outer Quantum Glow */
+                0 0 10px rgba(0, 0, 0, 0.5);   /* Inner Shadow */
+        }
+
+        h2 { 
+            /* RETAINED ORIGINAL TITLE */
+            color: var(--color-accent-quantum); 
+            text-align: center;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        /* Inputs & Labels */
+        label { 
+            display: block; 
+            margin-bottom: 15px; 
+            font-size: 1.1rem;
+            color: var(--color-accent-quantum);
+        }
+        
+        input[type="number"] { 
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            
+            /* Input Neumorphism */
+            background: var(--color-bg-deep);
+            box-shadow: 
+                inset 5px 5px 10px var(--color-dark-source), 
+                inset -5px -5px 10px var(--color-light-source);
+            color: var(--color-text-primary);
+            transition: all 0.2s;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 
+                inset 2px 2px 5px var(--color-dark-source), 
+                inset -2px -2px 5px var(--color-light-source),
+                0 0 5px var(--color-accent-quantum); /* Focus Glow */
+        }
+        
+        /* Gum-like Thick Neumorphism Button */
+        #calculate { 
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 25px; /* Thicker/Gum-like radius */
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            
+            /* Neumorphism Base */
+            background: var(--color-bg-deep);
+            color: var(--color-text-primary);
+            box-shadow: 
+                8px 8px 16px var(--color-dark-source), 
+                -8px -8px 16px var(--color-light-source);
+            transition: all 0.3s;
+        }
+        
+        /* Button Interaction (Pressed State) */
+        #calculate:hover {
+            color: var(--color-accent-quantum);
+            box-shadow: 
+                10px 10px 20px var(--color-dark-source), 
+                -10px -10px 20px var(--color-light-source);
+        }
+        #calculate:active {
+            /* Inset/Pressed Neumorphism */
+            box-shadow: 
+                inset 5px 5px 10px var(--color-dark-source), 
+                inset -5px -5px 10px var(--color-light-source);
+            color: var(--color-accent-quantum);
+            transform: scale(0.98);
+        }
+
+        /* Display Panel */
+        #display { 
+            margin-top: 30px; 
+            padding: 15px;
+            min-height: 20px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.2); /* Subtle glass base */
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .error { 
+            color: var(--color-error); 
+            text-shadow: 0 0 5px rgba(255, 102, 102, 0.5);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quantum-container">
+        <h2>SQUARE ROOT INDICATOR APP</h2>
+
+        <form id="sqrt-form">
+            <label for="input-value">INPUT A VALUE:</label>
+            <input type="number" id="input-value" name="value" required placeholder="Enter a non-negative number">
+            <button type="submit" id="calculate">calculate square root</button>
+        </form>
+
+        <p id="display"></p>
+    </div>
+
+    <script>
+        const form = document.getElementById('sqrt-form');
+        const inputElement = document.getElementById('input-value');
+        const displayElement = document.getElementById('display');
+
+        function calculateSquareRoot(event) {
+            event.preventDefault();
+
+            const numValue = parseFloat(inputElement.value);
+
+            if (isNaN(numValue) || inputElement.value.trim() === '' || numValue < 0) {
+                displayElement.className = 'error';
+                if (numValue < 0) {
+                    displayElement.innerHTML = "ERROR: Input value cannot be negative.";
+                } else {
+                    displayElement.innerHTML = "ERROR: Please insert a valid number.";
+                }
+                return;
+            }
+
+            // The core calculation logic, fixed and clean
+            const result = Math.sqrt(numValue).toFixed(4); 
+            displayElement.className = '';
+            // RETAINED THE ORIGINAL PHRASING for output style
+            displayElement.innerHTML = `The square root of <strong>${numValue}</strong> is <strong>${result}</strong>.`;
+        }
+
+        form.addEventListener('submit', calculateSquareRoot);
+    </script>
+
+</body>
+</html>
